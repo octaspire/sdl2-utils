@@ -33,7 +33,10 @@ find_package(SDL2_image REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 
-add_subdirectory(external/octaspire_core)
+if (NOT TARGET octaspire_core)
+    add_subdirectory(external/octaspire_core)
+endif()
+
 file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")
 file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/octaspire/sdl2-utils/*.h")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/")
