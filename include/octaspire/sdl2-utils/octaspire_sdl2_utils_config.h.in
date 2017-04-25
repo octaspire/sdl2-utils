@@ -1,0 +1,31 @@
+/******************************************************************************
+Octaspire sdl2-utils - Utilities for SDL2
+Copyright 2017 www.octaspire.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+******************************************************************************/
+#ifndef OCTASPIRE_SDL2_UTILS_CONFIG_H
+#define OCTASPIRE_SDL2_UTILS_CONFIG_H
+
+#define OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MAJOR "${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MAJOR}"
+#define OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR "${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR}"
+#define OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_PATCH "${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_PATCH}"
+
+#define OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_STR   "Octaspire sdl2-utils version ${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MAJOR}.${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR}.${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_PATCH}"
+
+#define OCTASPIRE_SDL2_UTILS_CONFIG_TEST_RES_PATH "${OCTASPIRE_SDL2_UTILS_CONFIG_TEST_RES_PATH}"
+
+#define OCTASPIRE_SDL2_UTILS_CONFIG_MEMORY_ALLOCATOR_REGION_MIN_BLOCK_SIZE_IN_OCTETS 104858000
+
+#endif
+
