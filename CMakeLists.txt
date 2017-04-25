@@ -33,6 +33,7 @@ find_package(SDL2_image REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 
+add_subdirectory(external/octaspire_core)
 file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")
 file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/octaspire/sdl2-utils/*.h")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/")
@@ -49,7 +50,7 @@ if(OCTASPIRE_SDL2_UTILS_COVERAGE)
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --coverage")
 endif(OCTASPIRE_SDL2_UTILS_COVERAGE)
 
-add_executable(octaspire-sdl2-utils ${SOURCES})
+add_library(octaspire-sdl2-utils STATIC ${SOURCES})
 set_property(TARGET octaspire-sdl2-utils PROPERTY C_STANDARD 99)
 set_property(TARGET octaspire-sdl2-utils PROPERTY C_EXTENSIONS OFF)
 
