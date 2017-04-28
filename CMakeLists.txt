@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MAJOR 0)
-set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR 4)
+set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR 5)
 set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_PATCH 0)
 
 set(OCTASPIRE_SDL2_UTILS_CONFIG_TEST_RES_PATH "${CMAKE_CURRENT_SOURCE_DIR}/test/resource/")
@@ -33,7 +33,7 @@ find_package(SDL2_image REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 
-if (NOT TARGET octaspire_core)
+if (NOT TARGET octaspire-core)
     add_subdirectory(external/octaspire_core)
 endif()
 
@@ -68,7 +68,7 @@ if(CMAKE_C_COMPILER_ID MATCHES "Clang")
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fcolor-diagnostics")
 endif(CMAKE_C_COMPILER_ID MATCHES "Clang")
 
-target_link_libraries(octaspire-sdl2-utils ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} octaspire_core m)
+target_link_libraries(octaspire-sdl2-utils ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} octaspire-core m)
 install(TARGETS octaspire-sdl2-utils DESTINATION bin)
 
 add_custom_target(
