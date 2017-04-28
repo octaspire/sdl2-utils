@@ -19,7 +19,11 @@ limitations under the License.
 
 #include <stdbool.h>
 #include <SDL2/SDL.h>
+
+#ifdef OCTASPIRE_SDL2_UTILS_USE_SDL_IMAGE_LIBRARY
 #include <SDL2/SDL_image.h>
+#endif
+
 #include <octaspire/core/octaspire_memory.h>
 #include <octaspire/core/octaspire_stdio.h>
 

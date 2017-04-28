@@ -79,7 +79,11 @@ octaspire_sdl2_texture_t *octaspire_sdl2_texture_new_from_buffer(
         return self;
     }
 
+#ifdef OCTASPIRE_SDL2_UTILS_USE_SDL_IMAGE_LIBRARY
     SDL_Surface *imageSurface = IMG_Load_RW(SDL_RWFromConstMem(buffer, bufferLengthInOctets), 1);
+#else
+    SDL_Surface *imageSurface = SDL_LoadBMP_RW(SDL_RWFromConstMem(buffer, bufferLengthInOctets), 1);
+#endif
 
     if (!imageSurface)
     {
