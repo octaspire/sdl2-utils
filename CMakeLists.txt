@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.8.12)
+project(octaspire-sdl2-utils C)
 
 set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MAJOR 0)
-set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR 8)
+set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR 9)
 set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_PATCH 0)
 
 set(OCTASPIRE_SDL2_UTILS_CONFIG_TEST_RES_PATH "${CMAKE_CURRENT_SOURCE_DIR}/test/resource/")
@@ -15,7 +16,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif(NOT CMAKE_BUILD_TYPE)
 
 if(EXISTS "${CMAKE_SOURCE_DIR}/.gitmodules")
-    message("== Updating git submodules...")
+    message("== Updating git submodules of ${PROJECT_NAME}...")
     execute_process(
         COMMAND git submodule update --init --recursive --remote
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -23,8 +24,7 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/.gitmodules")
 endif()
 
 
-project(octaspire-sdl2-utils C)
-message("== Build type is ${CMAKE_BUILD_TYPE}")
+message("== Build type of ${PROJECT_NAME} is ${CMAKE_BUILD_TYPE}")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/external/cmake")
 
@@ -34,15 +34,18 @@ option(OCTASPIRE_SDL2_UTILS_USE_SDL_IMAGE_LIBRARY "OCTASPIRE_SDL2_UTILS_USE_SDL_
 
 if(OCTASPIRE_SDL2_UTILS_USE_SDL_IMAGE_LIBRARY)
     target_compile_definitions(octaspire-sdl2-utils PRIVATE OCTASPIRE_SDL2_UTILS_USE_SDL_IMAGE_LIBRARY=1)
-    message("== Using SDL2 image library for octaspire-sdl2-utils")
+    message("== ${PROJECT_NAME} using SDL2 image library")
     find_package(SDL2_image REQUIRED)
 endif(OCTASPIRE_SDL2_UTILS_USE_SDL_IMAGE_LIBRARY)
 
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 
 if (NOT TARGET octaspire-core)
+    message("== Project ${PROJECT_NAME} adding subdirectory:")
+    message("-----------------------------------------------")
     add_subdirectory(external/octaspire_core)
-endif()
+    message("-----------------------------------------------")
+endif(NOT TARGET octaspire-core)
 
 file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")
 file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/include/octaspire/sdl2-utils/*.h")
@@ -54,11 +57,18 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}/include")
 
 
 option(OCTASPIRE_SDL2_UTILS_COVERAGE "OCTASPIRE_SDL2_UTILS_COVERAGE" OFF)
+option(OCTASPIRE_SDL2_UTILS_UNIT_TEST "OCTASPIRE_SDL2_UTILS_UNIT_TEST" ON)
 
 if(OCTASPIRE_SDL2_UTILS_COVERAGE)
-    message("== Code coverage enabled")
+    message("== Code coverage enabled for ${PROJECT_NAME}")
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --coverage")
 endif(OCTASPIRE_SDL2_UTILS_COVERAGE)
+
+if(OCTASPIRE_SDL2_UTILS_UNIT_TEST)
+    message("== Unit testing enabled for ${PROJECT_NAME}")
+else()
+    message("== Unit testing disabled for ${PROJECT_NAME}")
+endif(OCTASPIRE_SDL2_UTILS_UNIT_TEST)
 
 add_library(octaspire-sdl2-utils STATIC ${SOURCES})
 set_property(TARGET octaspire-sdl2-utils PROPERTY C_STANDARD 99)
@@ -88,7 +98,10 @@ add_custom_target(
     vera-sdl2-utils
     COMMAND vera++ --error ${SOURCES} ${HEADERS})
 
-enable_testing()
-include(CTest)
-add_subdirectory(test)
+if(NOT TARGET octaspire-sdl2-utils-test-runner AND OCTASPIRE_SDL2_UTILS_UNIT_TEST)
+    message("== Building of unit tests enabled for ${PROJECT_NAME}")
+    enable_testing()
+    include(CTest)
+    add_subdirectory(test)
+endif(NOT TARGET octaspire-sdl2-utils-test-runner AND OCTASPIRE_SDL2_UTILS_UNIT_TEST)
 

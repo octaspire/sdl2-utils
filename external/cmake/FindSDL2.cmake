@@ -56,7 +56,12 @@
 # module with the minor edit of changing "SDL" to "SDL2" where necessary. This
 # was not created for redistribution, and exists temporarily pending official
 # SDL2 CMake modules.
-
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# This file is modified version, not the original.
+# Modified by www.octaspire.com 2017
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
 #=============================================================================
 # Copyright 2003-2009 Kitware, Inc.
 #
@@ -90,7 +95,7 @@ FIND_PATH(SDL2_INCLUDE_DIR SDL.h
   /boot/system/develop/headers/x86/SDL2 				#haiku
   ${WIN32_SDL_DEPENDENCIES_DIR}
 )
-MESSAGE("SDL2_INCLUDE_DIR is ${SDL2_INCLUDE_DIR}")
+MESSAGE("** SDL2_INCLUDE_DIR is ${SDL2_INCLUDE_DIR}")
 
 FIND_LIBRARY(SDL2_LIBRARY_PATH
   NAMES SDL2
@@ -106,7 +111,7 @@ FIND_LIBRARY(SDL2_LIBRARY_PATH
   /boot/system/develop/lib   #haiku
 )
 
-MESSAGE( "SDL2_LIBRARY_PATH is ${SDL2_LIBRARY_PATH}")
+MESSAGE( "** SDL2_LIBRARY_PATH is ${SDL2_LIBRARY_PATH}")
 
 set(SDL2_LIBRARY_ONLY ${SDL2_LIBRARY_PATH} CACHE STRING "The SDL2 library, with no other libraries.")
 set(SDL2_LIBRARY_TEMP ${SDL2_LIBRARY_PATH})
