@@ -2,8 +2,10 @@ cmake_minimum_required(VERSION 2.8.12)
 project(octaspire-sdl2-utils C)
 
 set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MAJOR 0)
-set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR 9)
+set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR 10)
 set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_PATCH 0)
+
+message("== Building ${PROJECT_NAME} ${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MAJOR}.${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR}.${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_PATCH}")
 
 set(OCTASPIRE_SDL2_UTILS_CONFIG_TEST_RES_PATH "${CMAKE_CURRENT_SOURCE_DIR}/test/resource/")
 
@@ -17,10 +19,13 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 if(EXISTS "${CMAKE_SOURCE_DIR}/.gitmodules")
     message("== Updating git submodules of ${PROJECT_NAME}...")
+    message("-----------------------------------------------")
     execute_process(
         COMMAND git submodule update --init --recursive --remote
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     )
+    message("== Submodules of ${PROJECT_NAME} updated")
+    message("-----------------------------------------------")
 endif()
 
 
