@@ -18,10 +18,10 @@ limitations under the License.
 #define OCTASPIRE_SDL2_TEXTURE_H
 
 #include <stdbool.h>
-#include <SDL2/SDL.h>
+#include "SDL.h"
 
 #ifdef OCTASPIRE_SDL2_UTILS_USE_SDL_IMAGE_LIBRARY
-#include <SDL2/SDL_image.h>
+#include "SDL_image.h"
 #endif
 
 #include <octaspire/core/octaspire_memory.h>
