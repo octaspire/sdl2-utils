@@ -41,7 +41,7 @@ octaspire_sdl2_texture_t *octaspire_sdl2_texture_new_from_path(
     octaspire_memory_allocator_t *allocator);
 
 octaspire_sdl2_texture_t *octaspire_sdl2_texture_new_from_buffer(
-    char const * const buffer,
+    void const * const buffer,
     size_t const bufferLengthInOctets,
     char const * const name,
     bool const blend,
