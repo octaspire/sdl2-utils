@@ -48,6 +48,25 @@ octaspire_sdl2_texture_t *octaspire_sdl2_texture_new_from_buffer(
     SDL_Renderer *renderer,
     octaspire_memory_allocator_t *allocator);
 
+octaspire_sdl2_texture_t *octaspire_sdl2_texture_new_color_keyed_from_path(
+    char const * const path,
+    uint8_t const red,
+    uint8_t const green,
+    uint8_t const blue,
+    SDL_Renderer *renderer,
+    octaspire_stdio_t *stdio,
+    octaspire_memory_allocator_t *allocator);
+
+octaspire_sdl2_texture_t *octaspire_sdl2_texture_new_color_keyed_from_buffer(
+    void const * const buffer,
+    size_t const bufferLengthInOctets,
+    char const * const name,
+    uint8_t const red,
+    uint8_t const green,
+    uint8_t const blue,
+    SDL_Renderer *renderer,
+    octaspire_memory_allocator_t *allocator);
+
 void octaspire_sdl2_texture_release(octaspire_sdl2_texture_t *self);
 
 void octaspire_sdl2_texture_render_at_position_clip(

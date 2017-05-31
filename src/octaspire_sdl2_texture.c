@@ -119,6 +119,101 @@ octaspire_sdl2_texture_t *octaspire_sdl2_texture_new_from_buffer(
     return self;
 }
 
+octaspire_sdl2_texture_t *octaspire_sdl2_texture_new_color_keyed_from_path(
+    char const * const path,
+    uint8_t const red,
+    uint8_t const green,
+    uint8_t const blue,
+    SDL_Renderer *renderer,
+    octaspire_stdio_t *stdio,
+    octaspire_memory_allocator_t *allocator)
+{
+    size_t bufferLength = 0;
+    char *buffer = octaspire_helpers_path_to_buffer(path, &bufferLength, allocator, stdio);
+
+    if (!buffer)
+    {
+        return 0;
+    }
+
+    octaspire_sdl2_texture_t *result = octaspire_sdl2_texture_new_color_keyed_from_buffer(
+        buffer,
+        bufferLength,
+        path,
+        red,
+        green,
+        blue,
+        renderer,
+        allocator);
+
+    free(buffer);
+    buffer = 0;
+
+    return result;
+}
+
+octaspire_sdl2_texture_t *octaspire_sdl2_texture_new_color_keyed_from_buffer(
+    void const * const buffer,
+    size_t const bufferLengthInOctets,
+    char const * const name,
+    uint8_t const red,
+    uint8_t const green,
+    uint8_t const blue,
+    SDL_Renderer *renderer,
+    octaspire_memory_allocator_t *allocator)
+{
+    octaspire_sdl2_texture_t *self =
+        octaspire_memory_allocator_malloc(allocator, sizeof(octaspire_sdl2_texture_t));
+
+    if (!self)
+    {
+        return self;
+    }
+
+    self->allocator = allocator;
+    self->path      = octaspire_container_utf8_string_new(name, allocator);
+
+    if (!self->path)
+    {
+        octaspire_sdl2_texture_release(self);
+        self = 0;
+        return self;
+    }
+
+#ifdef OCTASPIRE_SDL2_UTILS_USE_SDL_IMAGE_LIBRARY
+    SDL_Surface *imageSurface = IMG_Load_RW(SDL_RWFromConstMem(buffer, bufferLengthInOctets), 1);
+#else
+    SDL_Surface *imageSurface = SDL_LoadBMP_RW(SDL_RWFromConstMem(buffer, bufferLengthInOctets), 1);
+#endif
+
+    if (!imageSurface)
+    {
+        octaspire_sdl2_texture_release(self);
+        self = 0;
+        return self;
+    }
+
+    SDL_SetColorKey(imageSurface, 1, SDL_MapRGB(imageSurface->format, red, green, blue));
+
+    self->texture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+
+    if (!self->texture)
+    {
+        printf("Texture \"%s\" cannot be created: %s\n", name, SDL_GetError());
+        octaspire_sdl2_texture_release(self);
+        self = 0;
+        return self;
+    }
+
+    self->width  = imageSurface->w;
+    self->height = imageSurface->h;
+
+    SDL_FreeSurface(imageSurface);
+    imageSurface = 0;
+
+    return self;
+}
+
 void octaspire_sdl2_texture_release(octaspire_sdl2_texture_t *self)
 {
     if (!self)
