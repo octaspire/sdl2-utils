@@ -10,14 +10,9 @@ before_install:
 
 before_script:
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE=Debug -DOCTASPIRE_SDL2_UTILS_COVERAGE:BOOL=ON ..
+    - cmake -DCMAKE_BUILD_TYPE=Debug ..
 
 script:
     - make
     - test/octaspire-sdl2-utils-test-runner
-    - cd test/CMakeFiles/octaspire-sdl2-utils-test-runner.dir
-    - gcov *.gcno
-
-after_success:
-      - bash <(curl -s https://codecov.io/bash)
 
