@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(octaspire-sdl2-utils C)
 
 set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MAJOR 0)
-set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR 25)
+set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR 26)
 set(OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_PATCH 0)
 
 message("== Building ${PROJECT_NAME} ${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MAJOR}.${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_MINOR}.${OCTASPIRE_SDL2_UTILS_CONFIG_VERSION_PATCH}")
@@ -76,12 +76,12 @@ else()
 endif(OCTASPIRE_SDL2_UTILS_UNIT_TEST)
 
 add_library(octaspire-sdl2-utils STATIC ${SOURCES})
-set_property(TARGET octaspire-sdl2-utils PROPERTY C_STANDARD 99)
+set_property(TARGET octaspire-sdl2-utils PROPERTY C_STANDARD 11)
 set_property(TARGET octaspire-sdl2-utils PROPERTY C_EXTENSIONS OFF)
 
 if(CMAKE_C_COMPILER_ID MATCHES "Clang" OR CMAKE_C_COMPILER_ID MATCHES "GNU")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wextra -pedantic")
-    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=c99 -fno-omit-frame-pointer -Wall -Wextra -pedantic -Werror")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -Wall -Wextra -pedantic")
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=c11 -fno-omit-frame-pointer -Wall -Wextra -pedantic -Werror")
 endif(CMAKE_C_COMPILER_ID MATCHES "Clang" OR CMAKE_C_COMPILER_ID MATCHES "GNU")
 
 if(CMAKE_C_COMPILER_ID MATCHES "Clang")
@@ -95,7 +95,7 @@ install(TARGETS octaspire-sdl2-utils DESTINATION lib)
 
 add_custom_target(
     cppcheck-sdl2-utils
-    COMMAND cppcheck --std=c99 -I "${CMAKE_CURRENT_SOURCE_DIR}/include" "${CMAKE_CURRENT_SOURCE_DIR}/external/octaspire_core/include" "${CMAKE_CURRENT_SOURCE_DIR}/external/octaspire_core/include"
+    COMMAND cppcheck --std=c11 -I "${CMAKE_CURRENT_SOURCE_DIR}/include" "${CMAKE_CURRENT_SOURCE_DIR}/external/octaspire_core/include" "${CMAKE_CURRENT_SOURCE_DIR}/external/octaspire_core/include"
             --enable=warning,performance,portability
             --verbose --quiet ${SOURCES} ${HEADERS})
 
