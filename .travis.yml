@@ -1,12 +1,22 @@
 language: c
+
+os:
+    - linux
+
 dist: trusty
+sudo: required
 
 compiler:
     - clang
     - gcc
 
 before_install:
-    - sudo apt-get install libsdl2-dev libsdl2-image-dev cmake cmake-data -y
+    - wget https://www.libsdl.org/release/SDL2-2.0.5.tar.gz
+    - tar xzf SDL2-2.0.5.tar.gz
+
+install:
+    - sudo apt-get install cmake cmake-data -y
+    - (cd SDL2-2.0.5 && ./configure && make && sudo make install)
 
 before_script:
     - cd build
