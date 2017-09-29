@@ -22,7 +22,7 @@ limitations under the License.
 static octaspire_memory_allocator_t *octaspireSDL2TimerTestAllocator = 0;
 
 
-#if (__STDC_VERSION__ >= 201112L)
+#if (__STDC_VERSION__ >= 201112L && !defined __MACH__)
 
 static double octaspire_test_sdl2_timer_private_timespec_to_double(
     struct timespec const ts)
@@ -76,7 +76,7 @@ GREATEST_SUITE(octaspire_sdl2_timer_suite)
 
     assert(octaspireSDL2TimerTestAllocator);
 
-#if (__STDC_VERSION__ >= 201112L)
+#if (__STDC_VERSION__ >= 201112L && !defined __MACH__)
     RUN_TEST(octaspire_sdl2_timer_test);
 #endif
 
